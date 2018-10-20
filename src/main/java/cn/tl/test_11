@@ -1,0 +1,6 @@
+11、Yarn双层调度架构设计图及各模块的主要作用。
+
+user				诸多用户client 		提交给ResourceManager
+集群全局管理			ResourceManager 	分发给NodeManager
+RM代理				各节点NodeManager	再次分发给各节点任务块
+作业块				各节点Task			实际执行任务的节点

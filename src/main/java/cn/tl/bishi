@@ -1,0 +1,68 @@
+一、HadoopCore模块
+1. Hadoop生态圈大图主要模块及其层次结构？（5分）
+ZooKeeper    							分布式协同服务（统筹所有）
+HBase 分布式实时数据库	Hive	数据仓库	Streaming	应用
+MapReduce		分布式离线计算框架，编程框架		计算
+Yarn  			另一种资源				    资源调度与任务管理
+HDFS			分布式文件系统				存储
+
+
+
+2. Hdfs架构设计图及各主要模块的作用？(5分)
+
+一个master 	对应	一个NameNode 	元数据管理者，管理数据信息，在哪里，分多少，怎么排序
+
+多个slave节点 	多个DataNode	实际数据存储
+
+Client		客户端对NameNode和DataNode来说透明无感，客户端通过和NameNode沟通获得数据具体所在那个DataNode，或要存储到那个DataNode，再来和DataNode 进行实际读写操作
+
+
+
+
+
+3. 写出HDFS shell中常用8个命令？
+Hdfs dfs -ls /
+Hdfs dfs -cat /txt
+Hdfs dfs -rm  /path 
+Hdfs dfs -mv /from /to
+Hdfs dfs -cp /from /to
+Hdfs dfs -put /localpath /hdfsPath
+Hdfs dfs -get /hdfspath /localpath
+Hdfs dfsadmin -report
+Hdfs dfs -copyFromLocal /localpath /hdfsPath
+Hdfs dfs -copyToLcal /hdfspath /localpath
+
+
+
+
+
+
+4. Hadoop项目的开发步骤及每步骤的作用？
+
+通过JAVA api 开发 
+建项目 修改 pom文件
+HDFS 着重存储的项目
+	获取日志信息logger单例
+	获取HDFS配置信息 Configuration
+	获取文件系统对象	FileSystem
+	获取HDFS目录路径 对象 Path
+	由文件系统FileSystem获得对应HDFS目录的 处理流（输入，输出，何种操作）
+	实际处理
+Mapreduce 着重计算的项目
+	获取HDFS配置信息
+	可通过Configuration传递参数
+	获取参数解析器
+	获取Job单例
+	Job通过类名	导入jar包
+	导入mapper	mapper类的实现 重写map
+	导入combine
+	导入reducer	reducer类的实现重写reduce
+
+	可选 指定reduce 个数
+	指定分区规则 	分区类的实现
+	指定分组规则	分组类的实现
+	指定map输出类型KV
+	指定最终输出类型KV	
+完成后打包上传
+Shell命令  yarn jar 测试
+上线
